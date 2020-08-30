@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<h1 class="mb-5 text-center">{{ question.question_text }}</h1>
+
+<ul class="list-group mb-5">
+	{% for choice in question.choice_set.all %}
+	<li class="list-group-item">
+		{{ choice.choice_text }}  <span class="badge badge-success float-right">{{ choice.votes }} vote{{ choice.votes | pluralize }}</span>
+	</li>
+	{% endfor %}
+</ul>
+
+<div id="myChart"></div>
+
+
+<a class="btn btn-secondary" href="{% url 'polls:index' %}">Back To Polls</a>
+<a class="btn btn-dark" href="{% url 'polls:detail' question.id %}">Vote again?</a>
+<br>
+<br>
+<br>
+
+<script>
+
+	var state ={	
+		'items':[],
+		'values':[],
+	}
+
+	var objId = "{{question.id}}"
+
+	var dataURL = `/polls/resultsdata/${objId}/`
+	$.ajax({
+		method:'GET',
+		url:dataURL,
+		success:function(response){
+			console.log('RESPONSE:', response)
+			for (var i in response){
+
+				var key = Object.keys(response[i])[0]
+				var value = Object.values(response[i])[0]
+
+				state.items.push(key)
+				state.values.push(value)
+			}
+
+			console.log('STATE:', state)
+			buildChart()
+
+		}
+	})
+
+	function buildChart(){
+			var chartData = {
+				type: "pie",
+				plot: {
+				  borderColor: "#2B313B",
+				  borderWidth: 5,
+				  // slice: 90,
+				  valueBox: {
+					placement: 'out',
+					text: '%t\n%npv%',
+					fontFamily: "Open Sans"
+				  },
+				  tooltip: {
+					fontSize: '18',
+					fontFamily: "Open Sans",
+					padding: "5 10",
+					text: "%npv%"
+				  },
+				  animation: {
+					effect: 2,
+					method: 5,
+					speed: 900,
+					sequence: 1,
+					delay: 1000
+				  }
+				},
+				source: {
+				  text: 'www.gamevoter.com',
+				  fontColor: "#8e99a9",
+				  fontFamily: "Open Sans"
+				},
+				title: {
+				  fontColor: "#8e99a9",
+				  text: 'GameVoter Results:',
+				  align: "left",
+				  offsetX: 10,
+				  fontFamily: "Open Sans",
+				  fontSize: 25
+				},
+				subtitle: {
+				  offsetX: 10,
+				  offsetY: 10,
+				  fontColor: "#8e99a9",
+				  fontFamily: "Open Sans",
+				  fontSize: "16",
+				  text: '',
+				  align: "left"
+				},
+				plotarea: {
+				  margin: "20 0 0 0"
+				},
+				series: [{
+					values: [state.values[0]],
+					text: state.items[0],
+					backgroundColor: '#50ADF5',
+				  },
+				  {
+					values: [state.values[1]],
+					text: state.items[1],
+					backgroundColor: '#FF7965',
+					detached: true
+				  },
+				  {
+					values: [state.values[2]],
+					text: state.items[2],
+					backgroundColor: '#FFCB45',
+					detached: true
+				  },
+				  {
+					text: state.items[3],
+					values: [state.values[3]],
+					backgroundColor: '#6877e5'
+				  },
+				  {
+					text: state.items[4],
+					values: [state.values[4]],
+					backgroundColor: '#6FB07F'
+				  }
+				]
+			  };
+
+
+		zingchart.render({
+		  id: "myChart",
+		  data: chartData,
+		});
+	}
+	
+
+
+	
+</script>
+
+{% endblock %}
