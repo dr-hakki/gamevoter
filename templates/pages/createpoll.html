@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<div class="col-md-5">
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+    <br>
+<form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="question_text">Poll Text</label>
+        <input type="text" name="question_text" class="form-control" id="question_text">
+    </div>
+    <div class="form-group">
+        <label for="image">Image (Optional) </label>
+        <input type="file" name="image" class="form-control" id="image">
+        <small id="usernameHelp" class="form-text text-muted">Adding an image is not mandatory</small>
+    </div>
+    <div class="form-group">
+        <label for="choice_number">Choice Number</label>
+        <input type="number" name="choice_number" class="form-control" id="choice_number">
+        <small id="usernameHelp" class="form-text text-muted">How many choices this poll have. Maximum is 7.</small>
+    </div>
+    <div class="form-group">
+        <label for="category">Game Category</label>
+        <select id="category" type="text" name="category">
+            <option value="action">Action</option>
+            <option value="fps">FPS</option>
+            <option value="moba">MOBA</option>
+            <option value="racing">Racing</option>
+            <option value="rpg">RPG</option>
+            <option value="simulation">Simulation</option>
+            <option value="sports">Sports</option>
+            <option value="strategy">Strategy</option>
+            <option value="otherg">Other</option>
+          </select>
+        <small id="usernameHelp" class="form-text text-muted">Category of these game/games.</small>
+    </div>
+    <div class="form-group">
+        <label for="xcategory">Poll Category</label>
+        <select id="xcategory" type="text" name="xcategory">
+            <option value="comparison">Game Comparison</option>
+            <option value="series">Best Game of the Series</option>
+            <option value="player">Best e-Sport Player</option>
+            <option value="team">Best e-Sport Team</option>
+            <option value="other">Other</option>
+          </select>
+        <small id="usernameHelp" class="form-text text-muted">Category your poll is about.</small>
+    </div>
+    <div class="form-group">
+        <label for="creator">Creator</label>
+        <input type="text" name="creator" value="Username" class="form-control" id="creator" >
+    </div>
+
+    <table>
+        {{ formset }}
+    </table>
+    <br>
+    <button type="submit" class="btn btn-primary">Create Poll</button>
+</form>
+</div>
+<br>
+{% endblock %}

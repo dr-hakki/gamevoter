@@ -1,56 +1,87 @@
+{% load static %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<a class="navbar-brand" href="/">GameVoter</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	  <span class="navbar-toggler-icon"></span>
 	</button>
   
+
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 	  <ul class="navbar-nav mr-auto">
-		<li class="nav-item active">
-		  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-		</li>
-		<li class="nav-item">
-		  <a class="nav-link" href="#">Link</a>
-		</li>
-		<li class="nav-item dropdown">
+		<a class="navbar-brand" href="{% url 'index' %}">
+			<img src="{% static "polls/gvlogo.PNG" %}" width="30" height="30" class="d-inline-block align-top" alt="Nick's Logo">
+			<span>GameVoter</span>
+		  </a>
+		
+		
+		<li class="nav-item dropdown active">
 		  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 			Categories
 		  </a>
 		  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-			<a class="dropdown-item" href="{% url 'polls:indexaction' %}">Action</a>
-			<a class="dropdown-item" href="{% url 'polls:indexstrategy' %}">Strategy</a>
+			<a class="dropdown-item" href="{% url 'polls:indexpopular' %}">Popular Comparisons</a>
 			<div class="dropdown-divider"></div>
-			<a class="dropdown-item" href="#">Popular Comparisons</a>
+			<a class="dropdown-item" href="{% url 'polls:indexaction' %}">Action</a>
+			<a class="dropdown-item" href="{% url 'polls:indexfps' %}">FPS</a>
+			<a class="dropdown-item" href="{% url 'polls:indexmoba' %}">MOBA</a>
+			<a class="dropdown-item" href="{% url 'polls:indexracing' %}">Racing</a>
+			<a class="dropdown-item" href="{% url 'polls:indexrpg' %}">RPG</a>
+			<a class="dropdown-item" href="{% url 'polls:indexsimulation' %}">Simulation</a>
+			<a class="dropdown-item" href="{% url 'polls:indexsports' %}">Sports</a>
+			<a class="dropdown-item" href="{% url 'polls:indexstory' %}">Story</a>
+			<a class="dropdown-item" href="{% url 'polls:indexotherg' %}">Other</a>
+			
 		  </div>
 		</li>
-		<li class="nav-item">
-		  <a class="nav-link disabled" href="#">Disabled</a>
-		</li>
+		<li class="nav-item active">
+			<a class="nav-link" href="#">News <span class="sr-only">(current)</span></a>
+		  </li>
 		
 	  </ul>
 	  <ul class="navbar-nav ml-auto">
+		
 		{% if user.is_authenticated %}
-		<li>
-			<a>Logged in as {{ user.username }} </a>
-		</li>
-		<li>
-		<form action="{% url 'logoutuser' %}", method="POST">
-		{% csrf_token %}    
-		<button type="submit" >Logout</button>
-		</form>
-		</li>
+
+		<li class="nav-item dropdown active">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+				Logged in as {{ user.username }}
+			</a>
+			<div class="dropdown-menu " aria-labelledby="navbarDropdown">
+			  <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+			  {% if perms.polls.add_question %}
+			  <a class="dropdown-item" href="{% url 'createpoll' %}">Create a Poll</a>
+			  {% else %}
+			  <a class="dropdown-item" href="{% url 'application' %}">Become a Poll Maker?</a>
+			  {% endif %}
+			  <div class="dropdown-divider"></div>
+			  <a class="dropdown-item" href="{% url 'faq' %}">Need Help?</a>
+			  <div class="dropdown-divider"></div>
+				<form class="dropdown-item"  action="{% url 'logoutuser' %}", method="POST">
+					{% csrf_token %}    
+					<button type="submit" class="btn btn-outline-secondary">Logout</button>
+				</form>
+			</div>
+		  </li>
 
 		{% else %}
+		
+
 		<li class="nav-item active">
 			<a class="nav-link" href="{% url 'signupuser' %}">Sign Up <span class="sr-only">(current)</span></a>
 		</li>
 		<li class="nav-item active">
-			<a class="nav-link" href="{% url 'loginuser' %}">Login <span class="sr-only">(current)</span></a>
+			<a class="nav-link" href="{% url 'loginuser' %}">Log In <span class="sr-only">(current)</span></a>
 		</li>
 
 
 		{% endif %}
-
+		{% url 'index' as index_url %}
+		{% if request.get_full_path == index_url %}
+		<form class="form-inline my-2 my-lg-0" method="POST">
+			{% csrf_token %}
+			<input class="form-control mr-sm-2" type="text" name="searched" type="search" placeholder="Search in GameVoter" aria-label="Search" id="searched">
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		</form>
+		{% endif %}
 		
 	  </ul>
 	</div>

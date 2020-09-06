@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="jquery/jquery.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <link rel="shortcut icon" type="image/png" href="{% static 'polls/gvlogo.PNG' %}"/>
+    <title>GameVoter {% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    <!-- NavBar -->
+    {% include 'partials/_navbar.html' %}
+    <div>
+        <div class="text-center">
+            <h1 class="font-italic text-info" >Frequently Asked Questions</h1>
+        </div>
+        <br>
+        <br>
+        <div class="text-center">
+            <h3 class="text-success">What is gamevoter.com</h3>
+            <p>GameVoter is a platform for gamers where they can compare their opinions and thoughts about games. </p>
+            <hr>
+            <br>
+            <h3 class="text-success">How can I vote?</h3>
+            <p>You can sign up easily with entering just a username and start voting!</p>
+            <hr>
+            <br>
+            <h3 class="text-success">How can I create polls?</h3>
+            <p>After you signed up you should apply for become a Poll Creator. If your gaming experience is proper your application will be accepted.</p>
+            <hr>
+            <br>
+            <h3 class="text-success">When will my application be answered?</h3>
+            <p>This process may take two, three days or sometimes couple of months depending on the application numbers.</p>
+            <hr>
+            <br>
+        </div>
+
+    </div>
+
+
+
+  </body>
+</html>

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Question, Choice
+from .models import Question, Choice, Application
 
 admin.site.site_header = "GameVoter Admin"
 admin.site.site_title = "GameVoter Admin Area"
@@ -13,12 +13,13 @@ class ChoiceInline(admin.TabularInline):
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    fieldsets = [(None, {'fields': ['question_text',"choice_number","category","vdq"]}),
-                 ('Date Information', {'fields': ['pub_date'], 'classes': ['collapse']}),
+    fieldsets = [(None, {'fields': ["popular",'question_text',"choice_number","image","category","xcategory","creator"]}),
                   ]
     inlines = [ChoiceInline]
+
 
 
 # admin.site.register(Question)
 # admin.site.register(Choice)
 admin.site.register(Question, QuestionAdmin)
+admin.site.register(Application)

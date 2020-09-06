@@ -21,9 +21,15 @@
 				id="choice{{ forloop.counter }}"
 				value="{{ choice.id }}"
 			/>
+			<hr>
 			<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+			{% if choice.image %}
+			<img src="{{ choice.image.url }}" style="width:150px;height:150px;">
+			{% endif %}
+			
 		</div>
 	{% endfor %}
 	<input type="submit" value="Vote" class="btn btn-success btn-lg btn-block mt-4" />
 </form>
+<br>
 {% endblock %}

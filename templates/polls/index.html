@@ -1,6 +1,6 @@
 {% extends 'base.html' %} 
 {% block content %} 
-  <h1 class="text-center mb-3">Poll Questions</h1>
+  <h1 class="text-center mb-3 text-info"> {{baslik}} </h1>
   {% if latest_question_list %}
     {% for question in latest_question_list %}
       <div class="card mb-3">
@@ -9,7 +9,7 @@
           {% if user.is_authenticated %}
           <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary btn-sm">Vote Now</a>
           {% else %}
-          <a>Login for vote!</a>
+          <a>Log In for vote!</a>
           {% endif %}
           <a href="{% url 'polls:results' question.id %}" class="btn btn-secondary btn-sm">Results</a>
         </div>

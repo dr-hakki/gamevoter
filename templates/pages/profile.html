@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="row justify-content-left mt-5">
+    <div >
+        <h1 class="text-warning">GameVoter Profile</h1>
+        <br>
+        <br>
+        <h3> Username: {{username}} </h3>
+        <br>
+        {% if perms.polls.add_question %}
+        <h3>e-Mail: {{ email }} </h3>
+        <br>
+        <h3 class="text-danger" >Remaining Poll Creation Right: {{left}} </h3>
+        <a href="" aria-disabled="true"> Become premium and earn 20 more poll rights! </a>
+        <br>
+        <br>
+        <h3>Questions Created by You:</h3>
+        <hr>
+        {% for q in qlist %}
+        <h5>{{ q }}</h5>
+        <hr>
+        {% endfor %}
+        {% else %}
+        <h5>You Are Not a Poll Creator Yet</h5>
+        <a href="{% url 'application' %}">Become a Poll Creator?</a>
+        {% endif %}
+
+    </div>
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

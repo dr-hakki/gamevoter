@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="jquery/jquery.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <link rel="shortcut icon" type="image/png" href="{% static 'polls/gvlogo.PNG' %}"/>
+    <title>GameVoter {% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    <!-- NavBar -->
+    {% include 'partials/_navbar.html' %}
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 m-auto">
+          
+          {% block content %}
+          <div class="row justify-content-center mt-5">
+            <div class="col-md-5">
+                <h2>Become A Poll Creator!</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-5">
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" class="form-control" id="username" aria-describedby="usernameHelp">
+                        <small id="usernameHelp" class="form-text text-muted">You can skip this. It will automatically send your username.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">e-Mail</label>
+                        <input type="text" name="email" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="cv">Gaming CV</label>
+                        <input type="text" name="cv" class="form-control" id="cv">
+                        <small id="cvhelp" class="form-text text-muted">Write about your gaming history. Which games did you play, which games are you professional, which categories do you like?</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="gameids">Account Nicknames</label>
+                        <input type="text" name="gameids" class="form-control" id="gameids">
+                        <small id="gameidshelp" class="form-text text-muted">Please write the name of your professional accounts (Steam, EpicGames, RiotGames etc.)</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Your Application</button>
+                </form>
+                <hr>
+            </div>
+        </div>
+    <br>
+    <br>
+          
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
