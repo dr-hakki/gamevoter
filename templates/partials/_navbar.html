@@ -1,7 +1,7 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-custom bg-custom">
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	  <span class="navbar-toggler-icon"></span>
+	  <span class="navbar-toggler-icon"><i class="fa fa-navicon" style="color:#fff; font-size:28px;"></i></span>
 	</button>
   
 
@@ -33,7 +33,7 @@
 		  </div>
 		</li>
 		<li class="nav-item active">
-			<a class="nav-link" href="#">News <span class="sr-only">(current)</span></a>
+			<a class="nav-link" href="{% url 'news' %}">News <span class="sr-only">(current)</span></a>
 		  </li>
 		
 	  </ul>
@@ -85,4 +85,6 @@
 		
 	  </ul>
 	</div>
+	
   </nav>
+  

@@ -16,8 +16,6 @@ class Question(models.Model):
     def __str__(self):
         return self.question_text
 
-
-
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
@@ -36,3 +34,14 @@ class Application(models.Model):
     left = models.IntegerField(default=10)
     def __str__(self):
         return self.username
+
+class New(models.Model):
+    head= models.CharField(max_length=150)
+    image = models.ImageField(upload_to="polls/images/",blank=True)
+    image2 = models.ImageField(upload_to="polls/images/",blank=True)
+    image2text = models.CharField(max_length=500,blank=True)
+    image3 = models.ImageField(upload_to="polls/images/",blank=True)
+    text = models.TextField()
+    pub_date = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.head

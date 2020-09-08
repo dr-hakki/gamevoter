@@ -16,6 +16,7 @@ urlpatterns = [
     path('othergames', views.indexotherg, name='indexotherg'),
     path('strategy', views.indexstrategy, name='indexstrategy'),
     path('comparison', views.indexcomparison, name='indexcomparison'),
+    path('series', views.indexseries, name='indexseries'),
     path('player', views.indexplayer, name='indexplayer'),
     path('team', views.indexteam, name='indexteam'),
     path('other', views.indexother, name='indexother'),

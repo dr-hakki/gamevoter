@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
-from .models import Question, Choice, Application
+from .models import Question, Choice, Application, New
 from django import forms
 from django.contrib import messages
 from django.forms import ModelForm
@@ -25,67 +25,67 @@ def index(request):
     return render(request, 'polls/index.html', context)
 
 def indexaction(request):
-    latest_question_list = Question.objects.filter(category="action")
+    latest_question_list = Question.objects.filter(category="action")[::-1]
     context = {'latest_question_list': latest_question_list,"baslik":"Action Polls"}
     return render(request, 'polls/index.html', context)
 def indexfps(request):
-    latest_question_list = Question.objects.filter(category="fps")
+    latest_question_list = Question.objects.filter(category="fps")[::-1]
     context = {'latest_question_list': latest_question_list,"baslik":"FPS Polls"}
     return render(request, 'polls/index.html', context)
 def indexmoba(request):
-    latest_question_list = Question.objects.filter(category="moba")
+    latest_question_list = Question.objects.filter(category="moba")[::-1]
     context = {'latest_question_list': latest_question_list,"baslik":"MOBA Polls"}
     return render(request, 'polls/index.html', context)
 def indexracing(request):
-    latest_question_list = Question.objects.filter(category="racing")
+    latest_question_list = Question.objects.filter(category="racing")[::-1]
     context = {'latest_question_list': latest_question_list,"baslik":"Racing Polls"}
     return render(request, 'polls/index.html', context)
 def indexrpg(request):
-    latest_question_list = Question.objects.filter(category="rpg")
+    latest_question_list = Question.objects.filter(category="rpg")[::-1]
     context = {'latest_question_list': latest_question_list,"baslik":"RPG Polls"}
     return render(request, 'polls/index.html', context)
 def indexstrategy(request):
-    latest_question_list = Question.objects.filter(category="strategy")
+    latest_question_list = Question.objects.filter(category="strategy")[::-1]
     context = {'latest_question_list': latest_question_list,"baslik":"Strategy Polls"}
     return render(request, 'polls/index.html', context)
 def indexsports(request):
-    latest_question_list = Question.objects.filter(category="sports")
+    latest_question_list = Question.objects.filter(category="sports")[::-1]
     context = {'latest_question_list': latest_question_list,"baslik":"Sports Polls"}
     return render(request, 'polls/index.html', context)
 def indexsimulation(request):
-    latest_question_list = Question.objects.filter(category="simulation")
+    latest_question_list = Question.objects.filter(category="simulation")[::-1]
     context = {'latest_question_list': latest_question_list,"baslik":"Simulation Polls"}
     return render(request, 'polls/index.html', context)
 def indexstory(request):
-    latest_question_list = Question.objects.filter(category="story")
+    latest_question_list = Question.objects.filter(category="story")[::-1]
     context = {'latest_question_list': latest_question_list,"baslik":"Games With Stories Polls"}
     return render(request, 'polls/index.html', context)
 def indexotherg(request):
-    latest_question_list = Question.objects.filter(category="otherg")
+    latest_question_list = Question.objects.filter(category="otherg")[::-1]
     context = {'latest_question_list': latest_question_list,"baslik":"Other Polls"}
     return render(request, 'polls/index.html', context)
 def indexseries(request):
-    latest_question_list = Question.objects.filter(xcategory="series")
-    context = {'latest_question_list': latest_question_list}
+    latest_question_list = Question.objects.filter(xcategory="series")[::-1]
+    context = {'latest_question_list': latest_question_list,"baslik":"Best Game of the Series"}
     return render(request, 'polls/index.html', context)
 def indexcomparison(request):
-    latest_question_list = Question.objects.filter(xcategory="comparison")
-    context = {'latest_question_list': latest_question_list}
+    latest_question_list = Question.objects.filter(xcategory="comparison")[::-1]
+    context = {'latest_question_list': latest_question_list,"baslik":"Game Comparison Polls"}
     return render(request, 'polls/index.html', context)
 def indexplayer(request):
-    latest_question_list = Question.objects.filter(xcategory="player")
-    context = {'latest_question_list': latest_question_list}
+    latest_question_list = Question.objects.filter(xcategory="player")[::-1]
+    context = {'latest_question_list': latest_question_list,"baslik":"Best e-Sports Players"}
     return render(request, 'polls/index.html', context)
 def indexteam(request):
-    latest_question_list = Question.objects.filter(xcategory="team")
-    context = {'latest_question_list': latest_question_list}
+    latest_question_list = Question.objects.filter(xcategory="team")[::-1]
+    context = {'latest_question_list': latest_question_list,"baslik":"Best e-Sports Teams"}
     return render(request, 'polls/index.html', context)
 def indexother(request):
-    latest_question_list = Question.objects.filter(xcategory="other")
-    context = {'latest_question_list': latest_question_list}
+    latest_question_list = Question.objects.filter(xcategory="other")[::-1]
+    context = {'latest_question_list': latest_question_list,"baslik":"Others"}
     return render(request, 'polls/index.html', context)
 def indexpopular(request):
-    latest_question_list = Question.objects.filter(popular=True)
+    latest_question_list = Question.objects.filter(popular=True)[::-1]
     context = {'latest_question_list': latest_question_list}
     return render(request, 'polls/indexpopular.html', context)
 
@@ -101,7 +101,8 @@ def profile(request):
     return render(request, 'pages/profile.html', context)
 
 def faq(request):
-    return render(request, 'pages/faq.html')
+    support = Application.objects.get(username="support")
+    return render(request, 'pages/faq.html',{"support":support})
 
 
 # Show specific question and choices
@@ -159,8 +160,6 @@ def vote(request, question_id):
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
-
-
 def resultsData(request, obj):
     votedata = []
 
@@ -210,6 +209,16 @@ def application(request):
 
         except IntegrityError:
             return render(request,"pages/application.html", {"form": ApplicationForm, "error":"Enter all the information please!"})
+
+
+def news(request):
+    news = New.objects.order_by('-pub_date')[:40]
+    return render(request, 'pages/news.html', { "news":news })
+
+def newdetail(request, new_id):
+    new = get_object_or_404(New, pk=new_id)
+    return render(request, 'pages/newdetail.html', { "new":new })
+
 
 
 class QuestionForm(ModelForm):
@@ -264,13 +273,9 @@ def createpoll(request):
                                                     'formset': formset})
 
     else:
-        messages.warning(request,  'You run out of right to create polls!')
+        messages.warning(request,  'You ran out of right to create polls!')
         latest_question_list = Question.objects.order_by('-pub_date')[:5]
         return render(request, 'pages/index.html',{"form": NameForm,"latest_question_list":latest_question_list})
-
-
-
-
 
 
 

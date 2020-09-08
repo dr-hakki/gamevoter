@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<div class="card text-center">
+    <div class="card-body">
+        {% if new.image %}
+        <img  src="{{ new.image.url }}" alt="Responsive image" style="width:240px;height:200px;">
+        {% endif %}
+        <h1 class="text-center mt-5 text-danger" style="font-size:350%;" id="blogdetailtitle">{{ new.head }}</h1>
+
+        <h5 class="text-center text-muted mb-5">{{ new.pub_date|date:'F jS Y' }}</h5>
+
+        <p style="font-size:130%;">{{ new.text|safe }}</p>
+        {% if new.image2 %}
+        <hr>
+        <img  src="{{ new.image2.url }}" alt="Responsive image" style="width:240px;height:200px;">
+        <br>
+        {% endif %}
+        {% if new.image2text %}
+        <br>
+        <h5>{{ new.image2text }}</h5>
+        <hr>
+        <br>
+        {% endif %}
+        <br>
+        {% if new.image3 %}
+        <img  src="{{ new.image3.url }}" alt="Responsive image" style="width:240px;height:200px;">
+        {% endif %}
+        <br>
+    </div>
+    </div>
+    <br>
+    <br>
+    <br>
+
+{% endblock %}

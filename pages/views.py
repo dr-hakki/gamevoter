@@ -13,7 +13,8 @@ class NameForm(forms.Form):
 def index(request):
   if request.method == "GET":
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    return render(request, 'pages/index.html',{"form": NameForm,"latest_question_list":latest_question_list})
+    support = Application.objects.get(username="support")
+    return render(request, 'pages/index.html',{"form": NameForm,"latest_question_list":latest_question_list,"support":support})
   else:
     try:
       latest_question_list = Question.objects.filter(question_text__icontains = request.POST["searched"])

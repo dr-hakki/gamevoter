@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<h1 id="blogtitle" class="font-weight-bold text-center font-italic">News from GameVoter</h1>
+
+{% for new in news %}
+<div class="row justify-content-center my-3">
+    <div class="card" style="width: 38rem;">
+        <div class="col-md-10">
+            <br>
+            {% if new.image %}
+            <img class="rounded float-right" src="{{ new.image.url }}" alt="Responsive image" style="width:130px;height:130px;">
+            {% endif %}
+            <a href="{% url 'newdetail' new.id %}"><h2 class="card-title" style="font-size:170%;">{{ new.head }}</h2></a>
+            <h5 class="text-muted">{{ new.pub_date|date:'M d Y'|upper }}</h5>
+            <h4 class="card-text">{{ new.text|striptags|truncatechars:80 }}</h4>
+            <br>
+        </div>
+
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}

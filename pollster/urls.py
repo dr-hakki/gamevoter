@@ -31,6 +31,8 @@ urlpatterns = [
     path('createpoll/', views.createpoll, name= "createpoll"),
     path('profile/', views.profile, name= "profile"),
     path('faq/', views.faq, name= "faq"),
+    path('news/', views.news, name= "news"),
+    path('<int:new_id>/', views.newdetail, name='newdetail'),
 ]
 
 
