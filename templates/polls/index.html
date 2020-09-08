@@ -6,6 +6,9 @@
       <div class="card mb-3">
         <div class="card-body">
           <p class="lead">{{ question.question_text }}</p>
+          {% if question.image %}
+          <img src="{{ question.image.url }}" style="width:120px;height:120px;">
+          {% endif %}
           {% if user.is_authenticated %}
           <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary btn-sm">Vote Now</a>
           {% else %}
